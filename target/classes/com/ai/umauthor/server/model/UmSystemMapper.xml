@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmSystemMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmSystem" >
+    <id column="SYSTEM_ID" property="systemId" jdbcType="DECIMAL" />
+    <result column="SYSTEM_NAME" property="systemName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SYSTEM_ID, SYSTEM_NAME, REMARK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmSystemExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_SYSTEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_SYSTEM
+    where SYSTEM_ID = #{systemId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UM_SYSTEM
+    where SYSTEM_ID = #{systemId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmSystemExample" >
+    delete from UM_SYSTEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmSystem" >
+    insert into UM_SYSTEM (SYSTEM_ID, SYSTEM_NAME, REMARK
+      )
+    values (#{systemId,jdbcType=DECIMAL}, #{systemName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmSystem" >
+    insert into UM_SYSTEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="systemName != null" >
+        SYSTEM_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="systemId != null" >
+        #{systemId,jdbcType=DECIMAL},
+      </if>
+      <if test="systemName != null" >
+        #{systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmSystemExample" resultType="java.lang.Integer" >
+    select count(*) from UM_SYSTEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_SYSTEM
+    <set >
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.systemName != null" >
+        SYSTEM_NAME = #{record.systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_SYSTEM
+    set SYSTEM_ID = #{record.systemId,jdbcType=DECIMAL},
+      SYSTEM_NAME = #{record.systemName,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmSystem" >
+    update UM_SYSTEM
+    <set >
+      <if test="systemName != null" >
+        SYSTEM_NAME = #{systemName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SYSTEM_ID = #{systemId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmSystem" >
+    update UM_SYSTEM
+    set SYSTEM_NAME = #{systemName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where SYSTEM_ID = #{systemId,jdbcType=DECIMAL}
+  </update>
+</mapper>

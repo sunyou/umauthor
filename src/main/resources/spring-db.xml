@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<aop:aspectj-autoproxy/>
+
+	<!--mybatis config -->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:com/ai/umauthor/server/model/**/*.xml"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.ai.umauthor.server.mapper"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>
+
+	<bean class="com.ai.common.dynasql.SqlRepo">
+		<property name="mapperLocations" value="classpath:com/ai/umauthor/server/sqlmap/*.sql"/>
+		<property name="jdbc" ref="jdbcTemplate"/>
+		<property name="keyStrategies">
+			<array value-type="com.ai.common.dynasql.SqlHelper.KeyStrategy">
+				<value>UPPER_CASE</value>
+			</array>
+		</property>
+	</bean>
+
+	<bean id="jdbcTemplate" class="com.ai.common.dynasql.NamedParamQueryImpl">
+		<property name="jdbcTemplate">
+			<bean
+							class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+				<constructor-arg>
+					<bean class="org.springframework.jdbc.core.JdbcTemplate"
+					      p:dataSource-ref="dataSource"/>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<!--transactionManager -->
+
+	<bean id="transactionManager"
+	      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource">
+		</property>
+	</bean>
+	<bean id="transactionTemplate"
+	      class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager">
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+	      destroy-method="close">
+		<!-- https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98 -->
+		<!-- https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8 -->
+		<property name="url" value="${db.url}"/>
+		<property name="username" value="${db.user}"/>
+		<property name="password" value="${db.pw}"/>
+		<property name="filters" value="log4j"/>
+
+		<property name="maxActive" value="${db.maxPoolSize}"/>
+		<property name="maxWait" value="10000"/>
+		<property name="useUnfairLock" value="true"/>
+		<property name="minIdle" value="2"/>
+
+		<property name="maxOpenPreparedStatements" value="100"/>
+		<property name="poolPreparedStatements" value="true"/>
+
+		<property name="validationQuery" value="select 1 from dual"/>
+		<property name="testOnBorrow" value="false"/>
+		<property name="testWhileIdle" value="true"/>
+	</bean>
+
+</beans>

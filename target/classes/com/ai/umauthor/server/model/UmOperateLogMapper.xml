@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmOperateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmOperateLog" >
+    <id column="LOG_ID" property="logId" jdbcType="DECIMAL" />
+    <result column="DOMAIN_ID" property="domainId" jdbcType="DECIMAL" />
+    <result column="OPERATOR_CODE" property="operatorCode" jdbcType="VARCHAR" />
+    <result column="OPERATOR_DATE" property="operatorDate" jdbcType="DATE" />
+    <result column="OPERATOR_TYPE" property="operatorType" jdbcType="VARCHAR" />
+    <result column="OPERATOR_DESC" property="operatorDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOG_ID, DOMAIN_ID, OPERATOR_CODE, OPERATOR_DATE, OPERATOR_TYPE, OPERATOR_DESC
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmOperateLogExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_OPERATE_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_OPERATE_LOG
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UM_OPERATE_LOG
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmOperateLogExample" >
+    delete from UM_OPERATE_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmOperateLog" >
+    insert into UM_OPERATE_LOG (LOG_ID, DOMAIN_ID, OPERATOR_CODE, 
+      OPERATOR_DATE, OPERATOR_TYPE, OPERATOR_DESC
+      )
+    values (#{logId,jdbcType=DECIMAL}, #{domainId,jdbcType=DECIMAL}, #{operatorCode,jdbcType=VARCHAR}, 
+      #{operatorDate,jdbcType=DATE}, #{operatorType,jdbcType=VARCHAR}, #{operatorDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmOperateLog" >
+    insert into UM_OPERATE_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        LOG_ID,
+      </if>
+      <if test="domainId != null" >
+        DOMAIN_ID,
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE,
+      </if>
+      <if test="operatorDate != null" >
+        OPERATOR_DATE,
+      </if>
+      <if test="operatorType != null" >
+        OPERATOR_TYPE,
+      </if>
+      <if test="operatorDesc != null" >
+        OPERATOR_DESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=DECIMAL},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null" >
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDate != null" >
+        #{operatorDate,jdbcType=DATE},
+      </if>
+      <if test="operatorType != null" >
+        #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDesc != null" >
+        #{operatorDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmOperateLogExample" resultType="java.lang.Integer" >
+    select count(*) from UM_OPERATE_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_OPERATE_LOG
+    <set >
+      <if test="record.logId != null" >
+        LOG_ID = #{record.logId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.domainId != null" >
+        DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operatorCode != null" >
+        OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorDate != null" >
+        OPERATOR_DATE = #{record.operatorDate,jdbcType=DATE},
+      </if>
+      <if test="record.operatorType != null" >
+        OPERATOR_TYPE = #{record.operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorDesc != null" >
+        OPERATOR_DESC = #{record.operatorDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_OPERATE_LOG
+    set LOG_ID = #{record.logId,jdbcType=DECIMAL},
+      DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      OPERATOR_DATE = #{record.operatorDate,jdbcType=DATE},
+      OPERATOR_TYPE = #{record.operatorType,jdbcType=VARCHAR},
+      OPERATOR_DESC = #{record.operatorDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmOperateLog" >
+    update UM_OPERATE_LOG
+    <set >
+      <if test="domainId != null" >
+        DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDate != null" >
+        OPERATOR_DATE = #{operatorDate,jdbcType=DATE},
+      </if>
+      <if test="operatorType != null" >
+        OPERATOR_TYPE = #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDesc != null" >
+        OPERATOR_DESC = #{operatorDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmOperateLog" >
+    update UM_OPERATE_LOG
+    set DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      OPERATOR_DATE = #{operatorDate,jdbcType=DATE},
+      OPERATOR_TYPE = #{operatorType,jdbcType=VARCHAR},
+      OPERATOR_DESC = #{operatorDesc,jdbcType=VARCHAR}
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </update>
+</mapper>

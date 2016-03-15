@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmMenu" >
+    <id column="MENU_ID" property="menuId" jdbcType="DECIMAL" />
+    <result column="DOMAIN_ID" property="domainId" jdbcType="DECIMAL" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="DECIMAL" />
+    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+    <result column="MENU_URL" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="MENU_ORDER" property="menuOrder" jdbcType="DECIMAL" />
+    <result column="MENU_TYPE" property="menuType" jdbcType="DECIMAL" />
+    <result column="MENU_DESC" property="menuDesc" jdbcType="VARCHAR" />
+    <result column="PARENT_MENU_ID" property="parentMenuId" jdbcType="DECIMAL" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="MENU_STATE" property="menuState" jdbcType="DECIMAL" />
+    <result column="MENU_IMAGE" property="menuImage" jdbcType="VARCHAR" />
+    <result column="MENU_CODE" property="menuCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MENU_ID, DOMAIN_ID, SYSTEM_ID, MENU_NAME, MENU_URL, MENU_ORDER, MENU_TYPE, MENU_DESC, 
+    PARENT_MENU_ID, CREATE_DATE, MENU_STATE, MENU_IMAGE, MENU_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmMenuExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_MENU
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_MENU
+    where MENU_ID = #{menuId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UM_MENU
+    where MENU_ID = #{menuId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmMenuExample" >
+    delete from UM_MENU
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmMenu" >
+    insert into UM_MENU (MENU_ID, DOMAIN_ID, SYSTEM_ID, 
+      MENU_NAME, MENU_URL, MENU_ORDER, 
+      MENU_TYPE, MENU_DESC, PARENT_MENU_ID, 
+      CREATE_DATE, MENU_STATE, MENU_IMAGE, 
+      MENU_CODE)
+    values (#{menuId,jdbcType=DECIMAL}, #{domainId,jdbcType=DECIMAL}, #{systemId,jdbcType=DECIMAL}, 
+      #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, #{menuOrder,jdbcType=DECIMAL}, 
+      #{menuType,jdbcType=DECIMAL}, #{menuDesc,jdbcType=VARCHAR}, #{parentMenuId,jdbcType=DECIMAL}, 
+      #{createDate,jdbcType=DATE}, #{menuState,jdbcType=DECIMAL}, #{menuImage,jdbcType=VARCHAR}, 
+      #{menuCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmMenu" >
+    insert into UM_MENU
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        MENU_ID,
+      </if>
+      <if test="domainId != null" >
+        DOMAIN_ID,
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID,
+      </if>
+      <if test="menuName != null" >
+        MENU_NAME,
+      </if>
+      <if test="menuUrl != null" >
+        MENU_URL,
+      </if>
+      <if test="menuOrder != null" >
+        MENU_ORDER,
+      </if>
+      <if test="menuType != null" >
+        MENU_TYPE,
+      </if>
+      <if test="menuDesc != null" >
+        MENU_DESC,
+      </if>
+      <if test="parentMenuId != null" >
+        PARENT_MENU_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="menuState != null" >
+        MENU_STATE,
+      </if>
+      <if test="menuImage != null" >
+        MENU_IMAGE,
+      </if>
+      <if test="menuCode != null" >
+        MENU_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="systemId != null" >
+        #{systemId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOrder != null" >
+        #{menuOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="menuType != null" >
+        #{menuType,jdbcType=DECIMAL},
+      </if>
+      <if test="menuDesc != null" >
+        #{menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMenuId != null" >
+        #{parentMenuId,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="menuState != null" >
+        #{menuState,jdbcType=DECIMAL},
+      </if>
+      <if test="menuImage != null" >
+        #{menuImage,jdbcType=VARCHAR},
+      </if>
+      <if test="menuCode != null" >
+        #{menuCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmMenuExample" resultType="java.lang.Integer" >
+    select count(*) from UM_MENU
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_MENU
+    <set >
+      <if test="record.menuId != null" >
+        MENU_ID = #{record.menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.domainId != null" >
+        DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.systemId != null" >
+        SYSTEM_ID = #{record.systemId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuName != null" >
+        MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuUrl != null" >
+        MENU_URL = #{record.menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuOrder != null" >
+        MENU_ORDER = #{record.menuOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuType != null" >
+        MENU_TYPE = #{record.menuType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuDesc != null" >
+        MENU_DESC = #{record.menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentMenuId != null" >
+        PARENT_MENU_ID = #{record.parentMenuId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=DATE},
+      </if>
+      <if test="record.menuState != null" >
+        MENU_STATE = #{record.menuState,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuImage != null" >
+        MENU_IMAGE = #{record.menuImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuCode != null" >
+        MENU_CODE = #{record.menuCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_MENU
+    set MENU_ID = #{record.menuId,jdbcType=DECIMAL},
+      DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      SYSTEM_ID = #{record.systemId,jdbcType=DECIMAL},
+      MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      MENU_URL = #{record.menuUrl,jdbcType=VARCHAR},
+      MENU_ORDER = #{record.menuOrder,jdbcType=DECIMAL},
+      MENU_TYPE = #{record.menuType,jdbcType=DECIMAL},
+      MENU_DESC = #{record.menuDesc,jdbcType=VARCHAR},
+      PARENT_MENU_ID = #{record.parentMenuId,jdbcType=DECIMAL},
+      CREATE_DATE = #{record.createDate,jdbcType=DATE},
+      MENU_STATE = #{record.menuState,jdbcType=DECIMAL},
+      MENU_IMAGE = #{record.menuImage,jdbcType=VARCHAR},
+      MENU_CODE = #{record.menuCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmMenu" >
+    update UM_MENU
+    <set >
+      <if test="domainId != null" >
+        DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="systemId != null" >
+        SYSTEM_ID = #{systemId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuName != null" >
+        MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        MENU_URL = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOrder != null" >
+        MENU_ORDER = #{menuOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="menuType != null" >
+        MENU_TYPE = #{menuType,jdbcType=DECIMAL},
+      </if>
+      <if test="menuDesc != null" >
+        MENU_DESC = #{menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMenuId != null" >
+        PARENT_MENU_ID = #{parentMenuId,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="menuState != null" >
+        MENU_STATE = #{menuState,jdbcType=DECIMAL},
+      </if>
+      <if test="menuImage != null" >
+        MENU_IMAGE = #{menuImage,jdbcType=VARCHAR},
+      </if>
+      <if test="menuCode != null" >
+        MENU_CODE = #{menuCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MENU_ID = #{menuId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmMenu" >
+    update UM_MENU
+    set DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      SYSTEM_ID = #{systemId,jdbcType=DECIMAL},
+      MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      MENU_URL = #{menuUrl,jdbcType=VARCHAR},
+      MENU_ORDER = #{menuOrder,jdbcType=DECIMAL},
+      MENU_TYPE = #{menuType,jdbcType=DECIMAL},
+      MENU_DESC = #{menuDesc,jdbcType=VARCHAR},
+      PARENT_MENU_ID = #{parentMenuId,jdbcType=DECIMAL},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      MENU_STATE = #{menuState,jdbcType=DECIMAL},
+      MENU_IMAGE = #{menuImage,jdbcType=VARCHAR},
+      MENU_CODE = #{menuCode,jdbcType=VARCHAR}
+    where MENU_ID = #{menuId,jdbcType=DECIMAL}
+  </update>
+</mapper>

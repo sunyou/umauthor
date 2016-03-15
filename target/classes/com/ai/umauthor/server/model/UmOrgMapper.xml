@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmOrgMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmOrg" >
+    <id column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="DOMAIN_ID" property="domainId" jdbcType="DECIMAL" />
+    <result column="PARENT_ORG_ID" property="parentOrgId" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_STATE" property="orgState" jdbcType="DECIMAL" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="ORG_TYPE" property="orgType" jdbcType="VARCHAR" />
+    <result column="ORG_SHORT" property="orgShort" jdbcType="VARCHAR" />
+    <result column="ORG_INTRODUCT" property="orgIntroduct" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="DISTRICT_CODE" property="districtCode" jdbcType="VARCHAR" />
+    <result column="STREET_CODE" property="streetCode" jdbcType="VARCHAR" />
+    <result column="VILLAGE_CODE" property="villageCode" jdbcType="VARCHAR" />
+    <result column="UPDATE_OPERATOR_ID" property="updateOperatorId" jdbcType="DECIMAL" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+    <result column="CREATE_OPERATOR_ID" property="createOperatorId" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="WEB_URL" property="webUrl" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="POSTCODE" property="postcode" jdbcType="VARCHAR" />
+    <result column="FAX_NO" property="faxNo" jdbcType="VARCHAR" />
+    <result column="ORG_ADDR" property="orgAddr" jdbcType="VARCHAR" />
+    <result column="CONTACT_TEL" property="contactTel" jdbcType="VARCHAR" />
+    <result column="CONTACT_NAME" property="contactName" jdbcType="VARCHAR" />
+    <result column="LAW_PERSON_TEL" property="lawPersonTel" jdbcType="VARCHAR" />
+    <result column="LAW_PERSON_NAME" property="lawPersonName" jdbcType="VARCHAR" />
+    <result column="ORG_LEVEL" property="orgLevel" jdbcType="DECIMAL" />
+    <result column="ADMIN_LEVEL" property="adminLevel" jdbcType="DECIMAL" />
+    <result column="BUSINESS_TYPE" property="businessType" jdbcType="DECIMAL" />
+    <result column="TEL_NO" property="telNo" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORG_ID, DOMAIN_ID, PARENT_ORG_ID, ORG_CODE, ORG_NAME, ORG_STATE, REMARKS, ORG_TYPE, 
+    ORG_SHORT, ORG_INTRODUCT, PROVINCE_CODE, CITY_CODE, DISTRICT_CODE, STREET_CODE, VILLAGE_CODE, 
+    UPDATE_OPERATOR_ID, UPDATE_TIME, CREATE_OPERATOR_ID, CREATE_TIME, WEB_URL, EMAIL, 
+    POSTCODE, FAX_NO, ORG_ADDR, CONTACT_TEL, CONTACT_NAME, LAW_PERSON_TEL, LAW_PERSON_NAME, 
+    ORG_LEVEL, ADMIN_LEVEL, BUSINESS_TYPE, TEL_NO, ORDER_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmOrgExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_ORG
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from UM_ORG
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmOrgExample" >
+    delete from UM_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmOrg" >
+    insert into UM_ORG (ORG_ID, DOMAIN_ID, PARENT_ORG_ID, 
+      ORG_CODE, ORG_NAME, ORG_STATE, 
+      REMARKS, ORG_TYPE, ORG_SHORT, 
+      ORG_INTRODUCT, PROVINCE_CODE, CITY_CODE, 
+      DISTRICT_CODE, STREET_CODE, VILLAGE_CODE, 
+      UPDATE_OPERATOR_ID, UPDATE_TIME, CREATE_OPERATOR_ID, 
+      CREATE_TIME, WEB_URL, EMAIL, 
+      POSTCODE, FAX_NO, ORG_ADDR, 
+      CONTACT_TEL, CONTACT_NAME, LAW_PERSON_TEL, 
+      LAW_PERSON_NAME, ORG_LEVEL, ADMIN_LEVEL, 
+      BUSINESS_TYPE, TEL_NO, ORDER_ID
+      )
+    values (#{orgId,jdbcType=VARCHAR}, #{domainId,jdbcType=DECIMAL}, #{parentOrgId,jdbcType=VARCHAR}, 
+      #{orgCode,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{orgState,jdbcType=DECIMAL}, 
+      #{remarks,jdbcType=VARCHAR}, #{orgType,jdbcType=VARCHAR}, #{orgShort,jdbcType=VARCHAR}, 
+      #{orgIntroduct,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{districtCode,jdbcType=VARCHAR}, #{streetCode,jdbcType=VARCHAR}, #{villageCode,jdbcType=VARCHAR}, 
+      #{updateOperatorId,jdbcType=DECIMAL}, #{updateTime,jdbcType=DATE}, #{createOperatorId,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=DATE}, #{webUrl,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{postcode,jdbcType=VARCHAR}, #{faxNo,jdbcType=VARCHAR}, #{orgAddr,jdbcType=VARCHAR}, 
+      #{contactTel,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, #{lawPersonTel,jdbcType=VARCHAR}, 
+      #{lawPersonName,jdbcType=VARCHAR}, #{orgLevel,jdbcType=DECIMAL}, #{adminLevel,jdbcType=DECIMAL}, 
+      #{businessType,jdbcType=DECIMAL}, #{telNo,jdbcType=VARCHAR}, #{orderId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmOrg" >
+    insert into UM_ORG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="domainId != null" >
+        DOMAIN_ID,
+      </if>
+      <if test="parentOrgId != null" >
+        PARENT_ORG_ID,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="orgState != null" >
+        ORG_STATE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="orgType != null" >
+        ORG_TYPE,
+      </if>
+      <if test="orgShort != null" >
+        ORG_SHORT,
+      </if>
+      <if test="orgIntroduct != null" >
+        ORG_INTRODUCT,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="districtCode != null" >
+        DISTRICT_CODE,
+      </if>
+      <if test="streetCode != null" >
+        STREET_CODE,
+      </if>
+      <if test="villageCode != null" >
+        VILLAGE_CODE,
+      </if>
+      <if test="updateOperatorId != null" >
+        UPDATE_OPERATOR_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createOperatorId != null" >
+        CREATE_OPERATOR_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="webUrl != null" >
+        WEB_URL,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="postcode != null" >
+        POSTCODE,
+      </if>
+      <if test="faxNo != null" >
+        FAX_NO,
+      </if>
+      <if test="orgAddr != null" >
+        ORG_ADDR,
+      </if>
+      <if test="contactTel != null" >
+        CONTACT_TEL,
+      </if>
+      <if test="contactName != null" >
+        CONTACT_NAME,
+      </if>
+      <if test="lawPersonTel != null" >
+        LAW_PERSON_TEL,
+      </if>
+      <if test="lawPersonName != null" >
+        LAW_PERSON_NAME,
+      </if>
+      <if test="orgLevel != null" >
+        ORG_LEVEL,
+      </if>
+      <if test="adminLevel != null" >
+        ADMIN_LEVEL,
+      </if>
+      <if test="businessType != null" >
+        BUSINESS_TYPE,
+      </if>
+      <if test="telNo != null" >
+        TEL_NO,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="parentOrgId != null" >
+        #{parentOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgState != null" >
+        #{orgState,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null" >
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgShort != null" >
+        #{orgShort,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIntroduct != null" >
+        #{orgIntroduct,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="streetCode != null" >
+        #{streetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="villageCode != null" >
+        #{villageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOperatorId != null" >
+        #{updateOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createOperatorId != null" >
+        #{createOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="webUrl != null" >
+        #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="faxNo != null" >
+        #{faxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddr != null" >
+        #{orgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="lawPersonTel != null" >
+        #{lawPersonTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lawPersonName != null" >
+        #{lawPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null" >
+        #{orgLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="adminLevel != null" >
+        #{adminLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=DECIMAL},
+      </if>
+      <if test="telNo != null" >
+        #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmOrgExample" resultType="java.lang.Integer" >
+    select count(*) from UM_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_ORG
+    <set >
+      <if test="record.orgId != null" >
+        ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domainId != null" >
+        DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.parentOrgId != null" >
+        PARENT_ORG_ID = #{record.parentOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null" >
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgState != null" >
+        ORG_STATE = #{record.orgState,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remarks != null" >
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgType != null" >
+        ORG_TYPE = #{record.orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgShort != null" >
+        ORG_SHORT = #{record.orgShort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgIntroduct != null" >
+        ORG_INTRODUCT = #{record.orgIntroduct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null" >
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null" >
+        CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.districtCode != null" >
+        DISTRICT_CODE = #{record.districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.streetCode != null" >
+        STREET_CODE = #{record.streetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.villageCode != null" >
+        VILLAGE_CODE = #{record.villageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateOperatorId != null" >
+        UPDATE_OPERATOR_ID = #{record.updateOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+      </if>
+      <if test="record.createOperatorId != null" >
+        CREATE_OPERATOR_ID = #{record.createOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.webUrl != null" >
+        WEB_URL = #{record.webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null" >
+        POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faxNo != null" >
+        FAX_NO = #{record.faxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAddr != null" >
+        ORG_ADDR = #{record.orgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactTel != null" >
+        CONTACT_TEL = #{record.contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactName != null" >
+        CONTACT_NAME = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lawPersonTel != null" >
+        LAW_PERSON_TEL = #{record.lawPersonTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lawPersonName != null" >
+        LAW_PERSON_NAME = #{record.lawPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgLevel != null" >
+        ORG_LEVEL = #{record.orgLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.adminLevel != null" >
+        ADMIN_LEVEL = #{record.adminLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.businessType != null" >
+        BUSINESS_TYPE = #{record.businessType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.telNo != null" >
+        TEL_NO = #{record.telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_ORG
+    set ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      PARENT_ORG_ID = #{record.parentOrgId,jdbcType=VARCHAR},
+      ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ORG_STATE = #{record.orgState,jdbcType=DECIMAL},
+      REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      ORG_TYPE = #{record.orgType,jdbcType=VARCHAR},
+      ORG_SHORT = #{record.orgShort,jdbcType=VARCHAR},
+      ORG_INTRODUCT = #{record.orgIntroduct,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
+      DISTRICT_CODE = #{record.districtCode,jdbcType=VARCHAR},
+      STREET_CODE = #{record.streetCode,jdbcType=VARCHAR},
+      VILLAGE_CODE = #{record.villageCode,jdbcType=VARCHAR},
+      UPDATE_OPERATOR_ID = #{record.updateOperatorId,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+      CREATE_OPERATOR_ID = #{record.createOperatorId,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      WEB_URL = #{record.webUrl,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      FAX_NO = #{record.faxNo,jdbcType=VARCHAR},
+      ORG_ADDR = #{record.orgAddr,jdbcType=VARCHAR},
+      CONTACT_TEL = #{record.contactTel,jdbcType=VARCHAR},
+      CONTACT_NAME = #{record.contactName,jdbcType=VARCHAR},
+      LAW_PERSON_TEL = #{record.lawPersonTel,jdbcType=VARCHAR},
+      LAW_PERSON_NAME = #{record.lawPersonName,jdbcType=VARCHAR},
+      ORG_LEVEL = #{record.orgLevel,jdbcType=DECIMAL},
+      ADMIN_LEVEL = #{record.adminLevel,jdbcType=DECIMAL},
+      BUSINESS_TYPE = #{record.businessType,jdbcType=DECIMAL},
+      TEL_NO = #{record.telNo,jdbcType=VARCHAR},
+      ORDER_ID = #{record.orderId,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmOrg" >
+    update UM_ORG
+    <set >
+      <if test="domainId != null" >
+        DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="parentOrgId != null" >
+        PARENT_ORG_ID = #{parentOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgState != null" >
+        ORG_STATE = #{orgState,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null" >
+        ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgShort != null" >
+        ORG_SHORT = #{orgShort,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIntroduct != null" >
+        ORG_INTRODUCT = #{orgIntroduct,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="streetCode != null" >
+        STREET_CODE = #{streetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="villageCode != null" >
+        VILLAGE_CODE = #{villageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOperatorId != null" >
+        UPDATE_OPERATOR_ID = #{updateOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createOperatorId != null" >
+        CREATE_OPERATOR_ID = #{createOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="webUrl != null" >
+        WEB_URL = #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        POSTCODE = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="faxNo != null" >
+        FAX_NO = #{faxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddr != null" >
+        ORG_ADDR = #{orgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        CONTACT_TEL = #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        CONTACT_NAME = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="lawPersonTel != null" >
+        LAW_PERSON_TEL = #{lawPersonTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lawPersonName != null" >
+        LAW_PERSON_NAME = #{lawPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null" >
+        ORG_LEVEL = #{orgLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="adminLevel != null" >
+        ADMIN_LEVEL = #{adminLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="businessType != null" >
+        BUSINESS_TYPE = #{businessType,jdbcType=DECIMAL},
+      </if>
+      <if test="telNo != null" >
+        TEL_NO = #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmOrg" >
+    update UM_ORG
+    set DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      PARENT_ORG_ID = #{parentOrgId,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORG_STATE = #{orgState,jdbcType=DECIMAL},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+      ORG_SHORT = #{orgShort,jdbcType=VARCHAR},
+      ORG_INTRODUCT = #{orgIntroduct,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+      CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+      DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+      STREET_CODE = #{streetCode,jdbcType=VARCHAR},
+      VILLAGE_CODE = #{villageCode,jdbcType=VARCHAR},
+      UPDATE_OPERATOR_ID = #{updateOperatorId,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      CREATE_OPERATOR_ID = #{createOperatorId,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      WEB_URL = #{webUrl,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      POSTCODE = #{postcode,jdbcType=VARCHAR},
+      FAX_NO = #{faxNo,jdbcType=VARCHAR},
+      ORG_ADDR = #{orgAddr,jdbcType=VARCHAR},
+      CONTACT_TEL = #{contactTel,jdbcType=VARCHAR},
+      CONTACT_NAME = #{contactName,jdbcType=VARCHAR},
+      LAW_PERSON_TEL = #{lawPersonTel,jdbcType=VARCHAR},
+      LAW_PERSON_NAME = #{lawPersonName,jdbcType=VARCHAR},
+      ORG_LEVEL = #{orgLevel,jdbcType=DECIMAL},
+      ADMIN_LEVEL = #{adminLevel,jdbcType=DECIMAL},
+      BUSINESS_TYPE = #{businessType,jdbcType=DECIMAL},
+      TEL_NO = #{telNo,jdbcType=VARCHAR},
+      ORDER_ID = #{orderId,jdbcType=DECIMAL}
+    where ORG_ID = #{orgId,jdbcType=VARCHAR}
+  </update>
+</mapper>

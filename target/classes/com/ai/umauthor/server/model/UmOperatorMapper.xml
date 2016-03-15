@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmOperatorMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmOperator" >
+    <id column="OPERATOR_ID" property="operatorId" jdbcType="DECIMAL" />
+    <result column="DOMAIN_ID" property="domainId" jdbcType="DECIMAL" />
+    <result column="OPERATOR_CODE" property="operatorCode" jdbcType="VARCHAR" />
+    <result column="OPERATOR_NAME" property="operatorName" jdbcType="VARCHAR" />
+    <result column="OPERATOR_PSW" property="operatorPsw" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="OPERATOR_STATE" property="operatorState" jdbcType="DECIMAL" />
+    <result column="CHANGE_PSW_DATE" property="changePswDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+    <result column="SEX_CODE" property="sexCode" jdbcType="DECIMAL" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="TEL_NO" property="telNo" jdbcType="VARCHAR" />
+    <result column="ADDRESS_DETAIL" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="POSITION_CODE" property="positionCode" jdbcType="VARCHAR" />
+    <result column="ADD_FROM" property="addFrom" jdbcType="VARCHAR" />
+    <result column="OPERATOR_TYPE" property="operatorType" jdbcType="VARCHAR" />
+    <result column="OPERATOR_LEVEL" property="operatorLevel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OPERATOR_ID, DOMAIN_ID, OPERATOR_CODE, OPERATOR_NAME, OPERATOR_PSW, ORG_ID, OPERATOR_STATE, 
+    CHANGE_PSW_DATE, CREATE_DATE, REMARKS, CERT_NO, SEX_CODE, BIRTHDAY, EMAIL, TEL_NO, 
+    ADDRESS_DETAIL, POSITION_CODE, ADD_FROM, OPERATOR_TYPE, OPERATOR_LEVEL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmOperatorExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_OPERATOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_OPERATOR
+    where OPERATOR_ID = #{operatorId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UM_OPERATOR
+    where OPERATOR_ID = #{operatorId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmOperatorExample" >
+    delete from UM_OPERATOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmOperator" >
+    insert into UM_OPERATOR (OPERATOR_ID, DOMAIN_ID, OPERATOR_CODE, 
+      OPERATOR_NAME, OPERATOR_PSW, ORG_ID, 
+      OPERATOR_STATE, CHANGE_PSW_DATE, CREATE_DATE, 
+      REMARKS, CERT_NO, SEX_CODE, 
+      BIRTHDAY, EMAIL, TEL_NO, 
+      ADDRESS_DETAIL, POSITION_CODE, ADD_FROM, 
+      OPERATOR_TYPE, OPERATOR_LEVEL)
+    values (#{operatorId,jdbcType=DECIMAL}, #{domainId,jdbcType=DECIMAL}, #{operatorCode,jdbcType=VARCHAR}, 
+      #{operatorName,jdbcType=VARCHAR}, #{operatorPsw,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, 
+      #{operatorState,jdbcType=DECIMAL}, #{changePswDate,jdbcType=DATE}, #{createDate,jdbcType=DATE}, 
+      #{remarks,jdbcType=VARCHAR}, #{certNo,jdbcType=VARCHAR}, #{sexCode,jdbcType=DECIMAL}, 
+      #{birthday,jdbcType=DATE}, #{email,jdbcType=VARCHAR}, #{telNo,jdbcType=VARCHAR}, 
+      #{addressDetail,jdbcType=VARCHAR}, #{positionCode,jdbcType=VARCHAR}, #{addFrom,jdbcType=VARCHAR}, 
+      #{operatorType,jdbcType=VARCHAR}, #{operatorLevel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmOperator" >
+    insert into UM_OPERATOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="domainId != null" >
+        DOMAIN_ID,
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE,
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME,
+      </if>
+      <if test="operatorPsw != null" >
+        OPERATOR_PSW,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="operatorState != null" >
+        OPERATOR_STATE,
+      </if>
+      <if test="changePswDate != null" >
+        CHANGE_PSW_DATE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="certNo != null" >
+        CERT_NO,
+      </if>
+      <if test="sexCode != null" >
+        SEX_CODE,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="telNo != null" >
+        TEL_NO,
+      </if>
+      <if test="addressDetail != null" >
+        ADDRESS_DETAIL,
+      </if>
+      <if test="positionCode != null" >
+        POSITION_CODE,
+      </if>
+      <if test="addFrom != null" >
+        ADD_FROM,
+      </if>
+      <if test="operatorType != null" >
+        OPERATOR_TYPE,
+      </if>
+      <if test="operatorLevel != null" >
+        OPERATOR_LEVEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null" >
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorPsw != null" >
+        #{operatorPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorState != null" >
+        #{operatorState,jdbcType=DECIMAL},
+      </if>
+      <if test="changePswDate != null" >
+        #{changePswDate,jdbcType=DATE},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sexCode != null" >
+        #{sexCode,jdbcType=DECIMAL},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telNo != null" >
+        #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="positionCode != null" >
+        #{positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addFrom != null" >
+        #{addFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorType != null" >
+        #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorLevel != null" >
+        #{operatorLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmOperatorExample" resultType="java.lang.Integer" >
+    select count(*) from UM_OPERATOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_OPERATOR
+    <set >
+      <if test="record.operatorId != null" >
+        OPERATOR_ID = #{record.operatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.domainId != null" >
+        DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operatorCode != null" >
+        OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorName != null" >
+        OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorPsw != null" >
+        OPERATOR_PSW = #{record.operatorPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null" >
+        ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorState != null" >
+        OPERATOR_STATE = #{record.operatorState,jdbcType=DECIMAL},
+      </if>
+      <if test="record.changePswDate != null" >
+        CHANGE_PSW_DATE = #{record.changePswDate,jdbcType=DATE},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=DATE},
+      </if>
+      <if test="record.remarks != null" >
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certNo != null" >
+        CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexCode != null" >
+        SEX_CODE = #{record.sexCode,jdbcType=DECIMAL},
+      </if>
+      <if test="record.birthday != null" >
+        BIRTHDAY = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telNo != null" >
+        TEL_NO = #{record.telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressDetail != null" >
+        ADDRESS_DETAIL = #{record.addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionCode != null" >
+        POSITION_CODE = #{record.positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addFrom != null" >
+        ADD_FROM = #{record.addFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorType != null" >
+        OPERATOR_TYPE = #{record.operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorLevel != null" >
+        OPERATOR_LEVEL = #{record.operatorLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_OPERATOR
+    set OPERATOR_ID = #{record.operatorId,jdbcType=DECIMAL},
+      DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      OPERATOR_PSW = #{record.operatorPsw,jdbcType=VARCHAR},
+      ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      OPERATOR_STATE = #{record.operatorState,jdbcType=DECIMAL},
+      CHANGE_PSW_DATE = #{record.changePswDate,jdbcType=DATE},
+      CREATE_DATE = #{record.createDate,jdbcType=DATE},
+      REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+      SEX_CODE = #{record.sexCode,jdbcType=DECIMAL},
+      BIRTHDAY = #{record.birthday,jdbcType=DATE},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      TEL_NO = #{record.telNo,jdbcType=VARCHAR},
+      ADDRESS_DETAIL = #{record.addressDetail,jdbcType=VARCHAR},
+      POSITION_CODE = #{record.positionCode,jdbcType=VARCHAR},
+      ADD_FROM = #{record.addFrom,jdbcType=VARCHAR},
+      OPERATOR_TYPE = #{record.operatorType,jdbcType=VARCHAR},
+      OPERATOR_LEVEL = #{record.operatorLevel,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmOperator" >
+    update UM_OPERATOR
+    <set >
+      <if test="domainId != null" >
+        DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorPsw != null" >
+        OPERATOR_PSW = #{operatorPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorState != null" >
+        OPERATOR_STATE = #{operatorState,jdbcType=DECIMAL},
+      </if>
+      <if test="changePswDate != null" >
+        CHANGE_PSW_DATE = #{changePswDate,jdbcType=DATE},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        CERT_NO = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sexCode != null" >
+        SEX_CODE = #{sexCode,jdbcType=DECIMAL},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telNo != null" >
+        TEL_NO = #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        ADDRESS_DETAIL = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="positionCode != null" >
+        POSITION_CODE = #{positionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addFrom != null" >
+        ADD_FROM = #{addFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorType != null" >
+        OPERATOR_TYPE = #{operatorType,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorLevel != null" >
+        OPERATOR_LEVEL = #{operatorLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OPERATOR_ID = #{operatorId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmOperator" >
+    update UM_OPERATOR
+    set DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      OPERATOR_PSW = #{operatorPsw,jdbcType=VARCHAR},
+      ORG_ID = #{orgId,jdbcType=VARCHAR},
+      OPERATOR_STATE = #{operatorState,jdbcType=DECIMAL},
+      CHANGE_PSW_DATE = #{changePswDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      CERT_NO = #{certNo,jdbcType=VARCHAR},
+      SEX_CODE = #{sexCode,jdbcType=DECIMAL},
+      BIRTHDAY = #{birthday,jdbcType=DATE},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      TEL_NO = #{telNo,jdbcType=VARCHAR},
+      ADDRESS_DETAIL = #{addressDetail,jdbcType=VARCHAR},
+      POSITION_CODE = #{positionCode,jdbcType=VARCHAR},
+      ADD_FROM = #{addFrom,jdbcType=VARCHAR},
+      OPERATOR_TYPE = #{operatorType,jdbcType=VARCHAR},
+      OPERATOR_LEVEL = #{operatorLevel,jdbcType=VARCHAR}
+    where OPERATOR_ID = #{operatorId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmAreasMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmAreas" >
+    <result column="AREA_ID" property="areaId" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="PYSHORT" property="pyshort" jdbcType="VARCHAR" />
+    <result column="PROVICE" property="provice" jdbcType="VARCHAR" />
+    <result column="REGION" property="region" jdbcType="VARCHAR" />
+    <result column="COUNTY" property="county" jdbcType="VARCHAR" />
+    <result column="TOWN" property="town" jdbcType="VARCHAR" />
+    <result column="PARENTID" property="parentid" jdbcType="VARCHAR" />
+    <result column="AREA_FULLNAME" property="areaFullname" jdbcType="VARCHAR" />
+    <result column="TIMESTAMP" property="timestamp" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="MODIFIED_USER" property="modifiedUser" jdbcType="VARCHAR" />
+    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="DATE" />
+    <result column="LEAF_FLAG" property="leafFlag" jdbcType="DECIMAL" />
+    <result column="TREELEVEL" property="treelevel" jdbcType="DECIMAL" />
+    <result column="LATITUDE" property="latitude" jdbcType="DECIMAL" />
+    <result column="LONGITUDE" property="longitude" jdbcType="DECIMAL" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AREA_ID, AREA_NAME, PYSHORT, PROVICE, REGION, COUNTY, TOWN, PARENTID, AREA_FULLNAME, 
+    TIMESTAMP, CREATE_USER, CREATE_TIME, MODIFIED_USER, MODIFIED_TIME, LEAF_FLAG, TREELEVEL, 
+    LATITUDE, LONGITUDE, REMARK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmAreasExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_AREAS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmAreasExample" >
+    delete from UM_AREAS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmAreas" >
+    insert into UM_AREAS (AREA_ID, AREA_NAME, PYSHORT, 
+      PROVICE, REGION, COUNTY, 
+      TOWN, PARENTID, AREA_FULLNAME, 
+      TIMESTAMP, CREATE_USER, CREATE_TIME, 
+      MODIFIED_USER, MODIFIED_TIME, LEAF_FLAG, 
+      TREELEVEL, LATITUDE, LONGITUDE, 
+      REMARK)
+    values (#{areaId,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{pyshort,jdbcType=VARCHAR}, 
+      #{provice,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, 
+      #{town,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, #{areaFullname,jdbcType=VARCHAR}, 
+      #{timestamp,jdbcType=DATE}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{modifiedUser,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=DATE}, #{leafFlag,jdbcType=DECIMAL}, 
+      #{treelevel,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmAreas" >
+    insert into UM_AREAS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="pyshort != null" >
+        PYSHORT,
+      </if>
+      <if test="provice != null" >
+        PROVICE,
+      </if>
+      <if test="region != null" >
+        REGION,
+      </if>
+      <if test="county != null" >
+        COUNTY,
+      </if>
+      <if test="town != null" >
+        TOWN,
+      </if>
+      <if test="parentid != null" >
+        PARENTID,
+      </if>
+      <if test="areaFullname != null" >
+        AREA_FULLNAME,
+      </if>
+      <if test="timestamp != null" >
+        TIMESTAMP,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="modifiedUser != null" >
+        MODIFIED_USER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+      <if test="leafFlag != null" >
+        LEAF_FLAG,
+      </if>
+      <if test="treelevel != null" >
+        TREELEVEL,
+      </if>
+      <if test="latitude != null" >
+        LATITUDE,
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="pyshort != null" >
+        #{pyshort,jdbcType=VARCHAR},
+      </if>
+      <if test="provice != null" >
+        #{provice,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null" >
+        #{town,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaFullname != null" >
+        #{areaFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        #{timestamp,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="modifiedUser != null" >
+        #{modifiedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=DATE},
+      </if>
+      <if test="leafFlag != null" >
+        #{leafFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="treelevel != null" >
+        #{treelevel,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmAreasExample" resultType="java.lang.Integer" >
+    select count(*) from UM_AREAS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_AREAS
+    <set >
+      <if test="record.areaId != null" >
+        AREA_ID = #{record.areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaName != null" >
+        AREA_NAME = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pyshort != null" >
+        PYSHORT = #{record.pyshort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provice != null" >
+        PROVICE = #{record.provice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null" >
+        REGION = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.county != null" >
+        COUNTY = #{record.county,jdbcType=VARCHAR},
+      </if>
+      <if test="record.town != null" >
+        TOWN = #{record.town,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        PARENTID = #{record.parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaFullname != null" >
+        AREA_FULLNAME = #{record.areaFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timestamp != null" >
+        TIMESTAMP = #{record.timestamp,jdbcType=DATE},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.modifiedUser != null" >
+        MODIFIED_USER = #{record.modifiedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifiedTime != null" >
+        MODIFIED_TIME = #{record.modifiedTime,jdbcType=DATE},
+      </if>
+      <if test="record.leafFlag != null" >
+        LEAF_FLAG = #{record.leafFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="record.treelevel != null" >
+        TREELEVEL = #{record.treelevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.latitude != null" >
+        LATITUDE = #{record.latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.longitude != null" >
+        LONGITUDE = #{record.longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_AREAS
+    set AREA_ID = #{record.areaId,jdbcType=VARCHAR},
+      AREA_NAME = #{record.areaName,jdbcType=VARCHAR},
+      PYSHORT = #{record.pyshort,jdbcType=VARCHAR},
+      PROVICE = #{record.provice,jdbcType=VARCHAR},
+      REGION = #{record.region,jdbcType=VARCHAR},
+      COUNTY = #{record.county,jdbcType=VARCHAR},
+      TOWN = #{record.town,jdbcType=VARCHAR},
+      PARENTID = #{record.parentid,jdbcType=VARCHAR},
+      AREA_FULLNAME = #{record.areaFullname,jdbcType=VARCHAR},
+      TIMESTAMP = #{record.timestamp,jdbcType=DATE},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      MODIFIED_USER = #{record.modifiedUser,jdbcType=VARCHAR},
+      MODIFIED_TIME = #{record.modifiedTime,jdbcType=DATE},
+      LEAF_FLAG = #{record.leafFlag,jdbcType=DECIMAL},
+      TREELEVEL = #{record.treelevel,jdbcType=DECIMAL},
+      LATITUDE = #{record.latitude,jdbcType=DECIMAL},
+      LONGITUDE = #{record.longitude,jdbcType=DECIMAL},
+      REMARK = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

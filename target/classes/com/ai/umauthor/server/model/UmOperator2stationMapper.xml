@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmOperator2stationMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmOperator2station" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="OPERATOR_ID" property="operatorId" jdbcType="DECIMAL" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="STATION_ID" property="stationId" jdbcType="DECIMAL" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="AUTHOR_OPERATOR_ID" property="authorOperatorId" jdbcType="DECIMAL" />
+    <result column="AUTHOR_DATE" property="authorDate" jdbcType="DATE" />
+    <result column="ALLOW_REAUTHOR" property="allowReauthor" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, OPERATOR_ID, ORG_ID, STATION_ID, REMARKS, AUTHOR_OPERATOR_ID, AUTHOR_DATE, ALLOW_REAUTHOR
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmOperator2stationExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_OPERATOR2STATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_OPERATOR2STATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UM_OPERATOR2STATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmOperator2stationExample" >
+    delete from UM_OPERATOR2STATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmOperator2station" >
+    insert into UM_OPERATOR2STATION (ID, OPERATOR_ID, ORG_ID, 
+      STATION_ID, REMARKS, AUTHOR_OPERATOR_ID, 
+      AUTHOR_DATE, ALLOW_REAUTHOR)
+    values (#{id,jdbcType=DECIMAL}, #{operatorId,jdbcType=DECIMAL}, #{orgId,jdbcType=VARCHAR}, 
+      #{stationId,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR}, #{authorOperatorId,jdbcType=DECIMAL}, 
+      #{authorDate,jdbcType=DATE}, #{allowReauthor,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmOperator2station" >
+    insert into UM_OPERATOR2STATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="stationId != null" >
+        STATION_ID,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="authorOperatorId != null" >
+        AUTHOR_OPERATOR_ID,
+      </if>
+      <if test="authorDate != null" >
+        AUTHOR_DATE,
+      </if>
+      <if test="allowReauthor != null" >
+        ALLOW_REAUTHOR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="authorOperatorId != null" >
+        #{authorOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="authorDate != null" >
+        #{authorDate,jdbcType=DATE},
+      </if>
+      <if test="allowReauthor != null" >
+        #{allowReauthor,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmOperator2stationExample" resultType="java.lang.Integer" >
+    select count(*) from UM_OPERATOR2STATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_OPERATOR2STATION
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operatorId != null" >
+        OPERATOR_ID = #{record.operatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orgId != null" >
+        ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationId != null" >
+        STATION_ID = #{record.stationId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remarks != null" >
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorOperatorId != null" >
+        AUTHOR_OPERATOR_ID = #{record.authorOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.authorDate != null" >
+        AUTHOR_DATE = #{record.authorDate,jdbcType=DATE},
+      </if>
+      <if test="record.allowReauthor != null" >
+        ALLOW_REAUTHOR = #{record.allowReauthor,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_OPERATOR2STATION
+    set ID = #{record.id,jdbcType=DECIMAL},
+      OPERATOR_ID = #{record.operatorId,jdbcType=DECIMAL},
+      ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      STATION_ID = #{record.stationId,jdbcType=DECIMAL},
+      REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      AUTHOR_OPERATOR_ID = #{record.authorOperatorId,jdbcType=DECIMAL},
+      AUTHOR_DATE = #{record.authorDate,jdbcType=DATE},
+      ALLOW_REAUTHOR = #{record.allowReauthor,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmOperator2station" >
+    update UM_OPERATOR2STATION
+    <set >
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        STATION_ID = #{stationId,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="authorOperatorId != null" >
+        AUTHOR_OPERATOR_ID = #{authorOperatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="authorDate != null" >
+        AUTHOR_DATE = #{authorDate,jdbcType=DATE},
+      </if>
+      <if test="allowReauthor != null" >
+        ALLOW_REAUTHOR = #{allowReauthor,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmOperator2station" >
+    update UM_OPERATOR2STATION
+    set OPERATOR_ID = #{operatorId,jdbcType=DECIMAL},
+      ORG_ID = #{orgId,jdbcType=VARCHAR},
+      STATION_ID = #{stationId,jdbcType=DECIMAL},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      AUTHOR_OPERATOR_ID = #{authorOperatorId,jdbcType=DECIMAL},
+      AUTHOR_DATE = #{authorDate,jdbcType=DATE},
+      ALLOW_REAUTHOR = #{allowReauthor,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

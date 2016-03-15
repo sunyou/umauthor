@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmDictitemMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmDictitem" >
+    <id column="DICT_KEY" property="dictKey" jdbcType="VARCHAR" />
+    <id column="ITEM_KEY" property="itemKey" jdbcType="VARCHAR" />
+    <result column="ITEM_VALUE" property="itemValue" jdbcType="VARCHAR" />
+    <result column="PARENT_ITEM_KEY" property="parentItemKey" jdbcType="VARCHAR" />
+    <result column="ITEM_ORDER" property="itemOrder" jdbcType="DECIMAL" />
+    <result column="ITEM_STATE" property="itemState" jdbcType="CHAR" />
+    <result column="ITEM_DESC" property="itemDesc" jdbcType="VARCHAR" />
+    <result column="ITEM_EXT_VALUE1" property="itemExtValue1" jdbcType="VARCHAR" />
+    <result column="ITEM_EXT_VALUE2" property="itemExtValue2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DICT_KEY, ITEM_KEY, ITEM_VALUE, PARENT_ITEM_KEY, ITEM_ORDER, ITEM_STATE, ITEM_DESC, 
+    ITEM_EXT_VALUE1, ITEM_EXT_VALUE2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmDictitemExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_DICTITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmDictitemKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_DICTITEM
+    where DICT_KEY = #{dictKey,jdbcType=VARCHAR}
+      and ITEM_KEY = #{itemKey,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmDictitemKey" >
+    delete from UM_DICTITEM
+    where DICT_KEY = #{dictKey,jdbcType=VARCHAR}
+      and ITEM_KEY = #{itemKey,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmDictitemExample" >
+    delete from UM_DICTITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmDictitem" >
+    insert into UM_DICTITEM (DICT_KEY, ITEM_KEY, ITEM_VALUE, 
+      PARENT_ITEM_KEY, ITEM_ORDER, ITEM_STATE, 
+      ITEM_DESC, ITEM_EXT_VALUE1, ITEM_EXT_VALUE2
+      )
+    values (#{dictKey,jdbcType=VARCHAR}, #{itemKey,jdbcType=VARCHAR}, #{itemValue,jdbcType=VARCHAR}, 
+      #{parentItemKey,jdbcType=VARCHAR}, #{itemOrder,jdbcType=DECIMAL}, #{itemState,jdbcType=CHAR}, 
+      #{itemDesc,jdbcType=VARCHAR}, #{itemExtValue1,jdbcType=VARCHAR}, #{itemExtValue2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmDictitem" >
+    insert into UM_DICTITEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dictKey != null" >
+        DICT_KEY,
+      </if>
+      <if test="itemKey != null" >
+        ITEM_KEY,
+      </if>
+      <if test="itemValue != null" >
+        ITEM_VALUE,
+      </if>
+      <if test="parentItemKey != null" >
+        PARENT_ITEM_KEY,
+      </if>
+      <if test="itemOrder != null" >
+        ITEM_ORDER,
+      </if>
+      <if test="itemState != null" >
+        ITEM_STATE,
+      </if>
+      <if test="itemDesc != null" >
+        ITEM_DESC,
+      </if>
+      <if test="itemExtValue1 != null" >
+        ITEM_EXT_VALUE1,
+      </if>
+      <if test="itemExtValue2 != null" >
+        ITEM_EXT_VALUE2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dictKey != null" >
+        #{dictKey,jdbcType=VARCHAR},
+      </if>
+      <if test="itemKey != null" >
+        #{itemKey,jdbcType=VARCHAR},
+      </if>
+      <if test="itemValue != null" >
+        #{itemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="parentItemKey != null" >
+        #{parentItemKey,jdbcType=VARCHAR},
+      </if>
+      <if test="itemOrder != null" >
+        #{itemOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="itemState != null" >
+        #{itemState,jdbcType=CHAR},
+      </if>
+      <if test="itemDesc != null" >
+        #{itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="itemExtValue1 != null" >
+        #{itemExtValue1,jdbcType=VARCHAR},
+      </if>
+      <if test="itemExtValue2 != null" >
+        #{itemExtValue2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmDictitemExample" resultType="java.lang.Integer" >
+    select count(*) from UM_DICTITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_DICTITEM
+    <set >
+      <if test="record.dictKey != null" >
+        DICT_KEY = #{record.dictKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemKey != null" >
+        ITEM_KEY = #{record.itemKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemValue != null" >
+        ITEM_VALUE = #{record.itemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentItemKey != null" >
+        PARENT_ITEM_KEY = #{record.parentItemKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemOrder != null" >
+        ITEM_ORDER = #{record.itemOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="record.itemState != null" >
+        ITEM_STATE = #{record.itemState,jdbcType=CHAR},
+      </if>
+      <if test="record.itemDesc != null" >
+        ITEM_DESC = #{record.itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemExtValue1 != null" >
+        ITEM_EXT_VALUE1 = #{record.itemExtValue1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemExtValue2 != null" >
+        ITEM_EXT_VALUE2 = #{record.itemExtValue2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_DICTITEM
+    set DICT_KEY = #{record.dictKey,jdbcType=VARCHAR},
+      ITEM_KEY = #{record.itemKey,jdbcType=VARCHAR},
+      ITEM_VALUE = #{record.itemValue,jdbcType=VARCHAR},
+      PARENT_ITEM_KEY = #{record.parentItemKey,jdbcType=VARCHAR},
+      ITEM_ORDER = #{record.itemOrder,jdbcType=DECIMAL},
+      ITEM_STATE = #{record.itemState,jdbcType=CHAR},
+      ITEM_DESC = #{record.itemDesc,jdbcType=VARCHAR},
+      ITEM_EXT_VALUE1 = #{record.itemExtValue1,jdbcType=VARCHAR},
+      ITEM_EXT_VALUE2 = #{record.itemExtValue2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmDictitem" >
+    update UM_DICTITEM
+    <set >
+      <if test="itemValue != null" >
+        ITEM_VALUE = #{itemValue,jdbcType=VARCHAR},
+      </if>
+      <if test="parentItemKey != null" >
+        PARENT_ITEM_KEY = #{parentItemKey,jdbcType=VARCHAR},
+      </if>
+      <if test="itemOrder != null" >
+        ITEM_ORDER = #{itemOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="itemState != null" >
+        ITEM_STATE = #{itemState,jdbcType=CHAR},
+      </if>
+      <if test="itemDesc != null" >
+        ITEM_DESC = #{itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="itemExtValue1 != null" >
+        ITEM_EXT_VALUE1 = #{itemExtValue1,jdbcType=VARCHAR},
+      </if>
+      <if test="itemExtValue2 != null" >
+        ITEM_EXT_VALUE2 = #{itemExtValue2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DICT_KEY = #{dictKey,jdbcType=VARCHAR}
+      and ITEM_KEY = #{itemKey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmDictitem" >
+    update UM_DICTITEM
+    set ITEM_VALUE = #{itemValue,jdbcType=VARCHAR},
+      PARENT_ITEM_KEY = #{parentItemKey,jdbcType=VARCHAR},
+      ITEM_ORDER = #{itemOrder,jdbcType=DECIMAL},
+      ITEM_STATE = #{itemState,jdbcType=CHAR},
+      ITEM_DESC = #{itemDesc,jdbcType=VARCHAR},
+      ITEM_EXT_VALUE1 = #{itemExtValue1,jdbcType=VARCHAR},
+      ITEM_EXT_VALUE2 = #{itemExtValue2,jdbcType=VARCHAR}
+    where DICT_KEY = #{dictKey,jdbcType=VARCHAR}
+      and ITEM_KEY = #{itemKey,jdbcType=VARCHAR}
+  </update>
+</mapper>

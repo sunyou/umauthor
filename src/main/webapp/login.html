@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/login.css" rel="stylesheet" type="text/css"></link>
+<title>文明网调查互动系统--登录</title>
+
+</head>
+<body>
+
+<!--top beign-->
+<div class="wrap top">
+	<div class="logo"><img src="images/logo.gif" /></div>
+    <div class="name">文明网调查互动系统</div>
+</div>
+<!--top beign-->
+<div class="wrap100 contentBg">
+	<div class="wrap loginContent">
+	<form action="login/doLogin">
+        <div class="loginList">        	
+			<ul>
+            	<li><span>用户名：</span><input name="name" size="30" value="test2" /></li>
+                <li><span>密　码：</span><input name="password" size="30"  value="test2"/></li>
+                <li><span>随机码：</span><input size="15" /> <img src="images/yzm.jpg" /></li>
+            </ul>
+            <input type="submit" value="登 录" />
+           
+        </div>
+       </form>
+    </div>
+</div>
+<div class="wrap100 bottom">© 2015 文明网</div>
+
+<script type="javascript">
+//用户登陆验证
+function login() {
+	var username = $.trim($("#username").val());//用户名
+	var password = $.trim($("#password").val());//密码
+	var checkCode = $.trim($("#checkcode").val());//随机码
+
+	//用户名为空
+	if(username==""){
+        $("#chkMsg").html('<i class="prompt_icon"></i>请输入用户名！');
+        $("#username").focus();
+        return false;
+  	}
+	//密码为空
+	if(password==""){
+	   $("#chkMsg").html('<i class="prompt_icon"></i>请输入密码！');
+	   $("#password").focus();
+	   return false;
+	}
+	
+	$("#chkMsg").html("<img src='images/loading.gif' style='width:16px;height:16px'>校验中,请稍候..");
+	//$("#login").attr("disabled",true);
+	$("#submit").attr("disabled",true);
+	$("#reset").attr("disabled",true);
+	$.ajax({
+		type: "POST",
+		dataType : 'json',
+		url: 'loginAction/doLogin',  
+		data: {"name":username,"password":password,"checkCode":checkCode},
+		success: function(data){
+			loginBack(data.resultCode,data.resultMessage);
+		},
+		error: function(data){
+   			alert("请求超时，请稍候再试!");
+   			//$("#login").attr("disabled",false);
+   			$("#submit").attr("disabled",false);
+   			$("#reset").attr("disabled",false);
+		}
+	});
+
+}
+
+</script>
+
+</body>
+</html>

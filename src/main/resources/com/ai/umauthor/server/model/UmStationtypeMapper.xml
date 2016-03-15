@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.UmStationtypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmStationtype" >
+    <id column="STATIONTYPE_ID" property="stationtypeId" jdbcType="DECIMAL" />
+    <result column="DOMAIN_ID" property="domainId" jdbcType="DECIMAL" />
+    <result column="STATIONTYPE_NAME" property="stationtypeName" jdbcType="VARCHAR" />
+    <result column="STATIONTYPE_CODE" property="stationtypeCode" jdbcType="VARCHAR" />
+    <result column="STATIONTYPE_STATE" property="stationtypeState" jdbcType="DECIMAL" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STATIONTYPE_ID, DOMAIN_ID, STATIONTYPE_NAME, STATIONTYPE_CODE, STATIONTYPE_STATE, 
+    REMARKS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.model.UmStationtypeExample" >
+    <include refid="pageMapper.head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UM_STATIONTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="pageMapper.tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UM_STATIONTYPE
+    where STATIONTYPE_ID = #{stationtypeId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UM_STATIONTYPE
+    where STATIONTYPE_ID = #{stationtypeId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.umauthor.server.model.UmStationtypeExample" >
+    delete from UM_STATIONTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.umauthor.server.model.UmStationtype" >
+    insert into UM_STATIONTYPE (STATIONTYPE_ID, DOMAIN_ID, STATIONTYPE_NAME, 
+      STATIONTYPE_CODE, STATIONTYPE_STATE, REMARKS
+      )
+    values (#{stationtypeId,jdbcType=DECIMAL}, #{domainId,jdbcType=DECIMAL}, #{stationtypeName,jdbcType=VARCHAR}, 
+      #{stationtypeCode,jdbcType=VARCHAR}, #{stationtypeState,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.umauthor.server.model.UmStationtype" >
+    insert into UM_STATIONTYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stationtypeId != null" >
+        STATIONTYPE_ID,
+      </if>
+      <if test="domainId != null" >
+        DOMAIN_ID,
+      </if>
+      <if test="stationtypeName != null" >
+        STATIONTYPE_NAME,
+      </if>
+      <if test="stationtypeCode != null" >
+        STATIONTYPE_CODE,
+      </if>
+      <if test="stationtypeState != null" >
+        STATIONTYPE_STATE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stationtypeId != null" >
+        #{stationtypeId,jdbcType=DECIMAL},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="stationtypeName != null" >
+        #{stationtypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationtypeCode != null" >
+        #{stationtypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationtypeState != null" >
+        #{stationtypeState,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.umauthor.server.model.UmStationtypeExample" resultType="java.lang.Integer" >
+    select count(*) from UM_STATIONTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UM_STATIONTYPE
+    <set >
+      <if test="record.stationtypeId != null" >
+        STATIONTYPE_ID = #{record.stationtypeId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.domainId != null" >
+        DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stationtypeName != null" >
+        STATIONTYPE_NAME = #{record.stationtypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationtypeCode != null" >
+        STATIONTYPE_CODE = #{record.stationtypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationtypeState != null" >
+        STATIONTYPE_STATE = #{record.stationtypeState,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remarks != null" >
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UM_STATIONTYPE
+    set STATIONTYPE_ID = #{record.stationtypeId,jdbcType=DECIMAL},
+      DOMAIN_ID = #{record.domainId,jdbcType=DECIMAL},
+      STATIONTYPE_NAME = #{record.stationtypeName,jdbcType=VARCHAR},
+      STATIONTYPE_CODE = #{record.stationtypeCode,jdbcType=VARCHAR},
+      STATIONTYPE_STATE = #{record.stationtypeState,jdbcType=DECIMAL},
+      REMARKS = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.umauthor.server.model.UmStationtype" >
+    update UM_STATIONTYPE
+    <set >
+      <if test="domainId != null" >
+        DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="stationtypeName != null" >
+        STATIONTYPE_NAME = #{stationtypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationtypeCode != null" >
+        STATIONTYPE_CODE = #{stationtypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationtypeState != null" >
+        STATIONTYPE_STATE = #{stationtypeState,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STATIONTYPE_ID = #{stationtypeId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.umauthor.server.model.UmStationtype" >
+    update UM_STATIONTYPE
+    set DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      STATIONTYPE_NAME = #{stationtypeName,jdbcType=VARCHAR},
+      STATIONTYPE_CODE = #{stationtypeCode,jdbcType=VARCHAR},
+      STATIONTYPE_STATE = #{stationtypeState,jdbcType=DECIMAL},
+      REMARKS = #{remarks,jdbcType=VARCHAR}
+    where STATIONTYPE_ID = #{stationtypeId,jdbcType=DECIMAL}
+  </update>
+</mapper>

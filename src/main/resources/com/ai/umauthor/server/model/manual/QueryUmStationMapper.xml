@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.umauthor.server.mapper.manual.QueryUmStationMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.umauthor.server.model.UmStation" >
+    <id column="STATION_ID" property="stationId" jdbcType="DECIMAL" />
+    <result column="DOMAIN_ID" property="domainId" jdbcType="VARCHAR" />
+    <result column="STATION_NAME" property="stationName" jdbcType="VARCHAR" />
+    <result column="STATION_DESC" property="stationDesc" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_OPERATOR_ID" property="createOperatorId" jdbcType="DECIMAL" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE" />
+    <result column="UPDATE_OPERATOR_ID" property="updateOperatorId" jdbcType="DECIMAL" />
+    <result column="STATION_STATE" property="stationState" jdbcType="DECIMAL" />
+    <result column="GROUP_ID" property="groupId" jdbcType="DECIMAL" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    STATION_ID, DOMAIN_ID, STATION_NAME, STATION_DESC, CREATE_DATE, CREATE_OPERATOR_ID, 
+    UPDATE_DATE, UPDATE_OPERATOR_ID, STATION_STATE, GROUP_ID, ORG_ID
+  </sql>
+  
+  <sql id="Base_Condition">  	
+    
+  </sql>  
+  
+  <select id="qryStationByOperator" resultMap="BaseResultMap" parameterType="com.ai.umauthor.server.service.mrg.model.QryUmStation" >
+    SELECT X.*
+	  FROM UM_STATION X, UM_OPERATOR2STATION Y, UM_OPERATOR Z
+	 WHERE X.STATION_ID = Y.STATION_ID
+	   AND Y.OPERATOR_ID = Z.OPERATOR_ID
+	   AND X.DOMAIN_ID = Z.DOMAIN_ID
+	   AND Z.OPERATOR_STATE='1'
+	   AND X.STATION_STATE='1'
+	<if test="operatorCode != null" >
+		AND Z.OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR} 
+  	</if>
+  	<if test="operatorId != null" >
+		AND Z.OPERATOR_ID =  #{operatorId,jdbcType=DECIMAL} 
+  	</if>	
+  </select>
+</mapper>
