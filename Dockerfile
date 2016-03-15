@@ -55,11 +55,11 @@ ADD . ./webapps
 RUN cd  ./webapps/ \
     && mvn  install -D maven.test.skip=true
 
-run cd ./webapps/ \
-    && mkdir  data \
-    && chmod 666 data \
-    && mv ./server.xml /usr/local/tomcat/conf/ \
-    && mv ./target/umauthor-0.0.1-SNAPSHOT .
+run cd ./webapps/ 
+#    && mkdir  data \
+#    && chmod 666 data \
+#    && mv ./server.xml /usr/local/tomcat/conf/ \
+#    && mv ./target/umauthor-0.0.1-SNAPSHOT .
 
 VOLUME /usr/local/tomcat/webapps/data
 
